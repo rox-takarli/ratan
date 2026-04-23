@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>جمعية براعم التكنولوجيا مستغانم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #00C2FF;
+    --secondary: #7B2FFF;
+    --accent: #FF6B35;
+    --dark: #060B18;
+    --dark2: #0D1528;
+    --dark3: #111D35;
+    --text: #E8F0FF;
+    --text-muted: #7A8CB0;
+    --card-bg: rgba(13, 21, 40, 0.85);
+    --border: rgba(0, 194, 255, 0.15);
+    --glow: 0 0 30px rgba(0, 194, 255, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ===== BACKGROUND ===== */
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,194,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,194,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .bg-orbs {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.12;
+    animation: orbFloat 15s ease-in-out infinite;
+  }
+
+  .orb-1 { width: 600px; height: 600px; background: var(--primary); top: -200px; right: -100px; animation-delay: 0s; }
+  .orb-2 { width: 500px; height: 500px; background: var(--secondary); bottom: 10%; left: -150px; animation-delay: -5s; }
+  .orb-3 { width: 300px; height: 300px; background: var(--accent); top: 50%; left: 50%; animation-delay: -10s; }
+
+  @media (max-width: 768px) {
+    .orb-1 { width: 300px; height: 300px; top: -100px; right: -50px; }
+    .orb-2 { width: 250px; height: 250px; }
+    .orb-3 { width: 200px; height: 200px; }
+  }
+
+  @keyframes orbFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.05); }
+    66% { transform: translate(-20px, 30px) scale(0.95); }
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 5%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(6, 11, 24, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-logo-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+
+  .nav-logo-text {
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1.2;
+    background: linear-gradient(135deg, var(--primary), #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  @media (max-width: 480px) {
+    .nav-logo-text { font-size: 0.85rem; }
+    .nav-logo-icon { width: 35px; height: 35px; font-size: 16px; }
+  }
+
+  /* Mobile Menu Button */
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 28px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.3s;
+  }
+  
+  .mobile-menu-btn:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+    transition: all 0.3s ease;
+  }
+
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--primary); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff !important;
+    padding: 8px 22px;
+    border-radius: 30px;
+    font-weight: 700 !important;
+    transition: opacity 0.3s !important;
+  }
+
+  .nav-cta:hover { opacity: 0.85; color: #fff !important; }
+
+  @media (max-width: 768px) {
+    .mobile-menu-btn {
+      display: flex;
+    }
+    
+    .nav-links {
+      position: fixed;
+      top: 70px;
+      left: -100%;
+      width: 100%;
+      height: calc(100vh - 70px);
+      background: rgba(6, 11, 24, 0.98);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 50px;
+      gap: 25px;
+      transition: left 0.3s ease;
+      z-index: 99;
+    }
+    
+    .nav-links.active {
+      left: 0;
+    }
+    
+    .nav-links a {
+      font-size: 1.2rem;
+      padding: 10px;
+    }
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 5% 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 194, 255, 0.1);
+    border: 1px solid rgba(0, 194, 255, 0.3);
+    color: var(--primary);
+    padding: 6px 18px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 32px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+
+  .hero h1 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    animation: fadeDown 0.8s ease 0.2s both;
+  }
+
+  .hero h1 .gradient-text {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+
+  .hero p {
+    font-size: clamp(0.95rem, 2vw, 1.2rem);
+    color: var(--text-muted);
+    max-width: 680px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+    font-weight: 400;
+    padding: 0 15px;
+    animation: fadeDown 0.8s ease 0.4s both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeDown 0.8s ease 0.6s both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 30px rgba(0, 194, 255, 0.3);
+    display: inline-block;
+  }
+  
+  @media (max-width: 480px) {
+    .btn-primary, .btn-secondary {
+      padding: 10px 24px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(0, 194, 255, 0.45);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    font-family: 'Cairo', sans-serif;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s, color 0.3s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  /* Stats Bar */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 60px;
+    padding: 24px 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    animation: fadeUp 1s ease 0.8s both;
+    max-width: 700px;
+    margin-inline: auto;
+  }
+  
+  @media (max-width: 550px) {
+    .stats-bar { gap: 15px; }
+    .stat-number { font-size: 1.6rem; }
+    .stat-label { font-size: 0.7rem; }
+  }
+
+  .stat-item { text-align: center; }
+
+  .stat-number {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 70px 5%;
+  }
+  
+  @media (max-width: 768px) {
+    section { padding: 50px 5%; }
+  }
+
+  .section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .section-tag::before {
+    content: '';
+    width: 20px;
+    height: 2px;
+    background: var(--primary);
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .section-sub {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 600px;
+    line-height: 1.8;
+  }
+
+  .section-header {
+    margin-bottom: 50px;
+  }
+
+  /* ===== DOMAINS ===== */
+  #domains { background: var(--dark2); }
+
+  .domains-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+  }
+  
+  @media (max-width: 480px) {
+    .domains-grid { gap: 16px; }
+  }
+
+  .domain-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+  }
+
+  .domain-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--primary));
+  }
+
+  .domain-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0, 194, 255, 0.4);
+    box-shadow: var(--glow);
+  }
+
+  .domain-icon {
+    font-size: 2.8rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .domain-name {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+
+  .domain-name-en {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* ===== ACTIVITIES ===== */
+  .activities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 28px;
+  }
+
+  .activity-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .activity-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .activity-number {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: rgba(0, 194, 255, 0.08);
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .activity-emoji {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .activity-title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    color: #fff;
+  }
+
+  .activity-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .activity-list li {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+  }
+
+  .activity-list li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+  }
+
+  /* ===== WHY ===== */
+  #why { background: var(--dark2); }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  .feature-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  
+  @media (max-width: 550px) {
+    .feature-card { flex-direction: column; align-items: center; text-align: center; }
+  }
+
+  .feature-card:hover {
+    border-color: rgba(0, 194, 255, 0.35);
+    transform: translateX(-4px);
+  }
+
+  .feature-icon-wrap {
+    width: 50px; height: 50px;
+    background: rgba(0, 194, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 194, 255, 0.15);
+  }
+
+  .feature-text h4 {
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+
+  .feature-text p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ===== TARGETS ===== */
+  .targets-wrapper {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .target-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 60px;
+    padding: 14px 25px;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  
+  @media (max-width: 550px) {
+    .target-pill { padding: 10px 20px; font-size: 0.9rem; }
+    .target-pill span:first-child { font-size: 1.4rem; }
+  }
+
+  .target-pill:hover {
+    transform: scale(1.04);
+    border-color: var(--primary);
+  }
+
+  .target-pill span:first-child {
+    font-size: 1.6rem;
+  }
+
+  /* ===== CONTACT ===== */
+  #contact { background: var(--dark2); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+  }
+
+  .contact-info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 30px;
+  }
+  
+  @media (max-width: 480px) {
+    .contact-info-card { padding: 30px 20px; }
+  }
+
+  .contact-info-card h3 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .contact-info-card p {
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    line-height: 1.8;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-item:last-child { border-bottom: none; }
+
+  .contact-item-icon {
+    width: 46px; height: 46px;
+    background: rgba(0, 194, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    border: 1px solid rgba(0, 194, 255, 0.15);
+    flex-shrink: 0;
+  }
+
+  .contact-item-content label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .contact-item-content a, .contact-item-content span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-item-content a:hover { color: var(--primary); }
+
+  /* CTA Box */
+  .cta-box {
+    background: linear-gradient(135deg, rgba(0,194,255,0.1), rgba(123,47,255,0.1));
+    border: 1px solid rgba(0, 194, 255, 0.25);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    position: sticky;
+    top: 90px;
+  }
+  
+  @media (max-width: 900px) {
+    .cta-box { position: static; margin-top: 20px; }
+  }
+  
+  @media (max-width: 480px) {
+    .cta-box { padding: 30px 20px; }
+  }
+
+  .cta-box-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+  }
+
+  .cta-box h3 {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .cta-box p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-bottom: 25px;
+  }
+
+  .cta-notice {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 25px;
+  }
+
+  .notice-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .notice-item::before {
+    content: '⚠️';
+    font-size: 0.85rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid var(--border);
+    padding: 40px 5%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-logo {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+
+  .footer-sub {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-bottom: 25px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  
+  @media (max-width: 550px) {
+    .footer-links { gap: 12px; }
+    .footer-links a { font-size: 0.8rem; }
+  }
+
+  .footer-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--primary); }
+
+  .footer-copy {
+    color: rgba(122, 140, 176, 0.5);
+    font-size: 0.75rem;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .glow-divider {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 3px;
+    margin: 20px 0 0;
+  }
+  
+  @media (max-width: 768px) {
+    .glow-divider { margin: 15px 0 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🌱</div>
+    <div class="nav-logo-text">براعم التكنولوجيا<br><span style="font-size:0.65rem;font-weight:400;color:#7A8CB0;">مستغانم</span></div>
+  </div>
+  <button class="mobile-menu-btn" id="menuBtn" aria-label="القائمة">☰</button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#domains">المجالات</a></li>
+    <li><a href="#activities">الأنشطة</a></li>
+    <li><a href="#why">لماذا نحن</a></li>
+    <li><a href="#contact" class="nav-cta">تواصل معنا</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-badge">🇩🇿 ولاية مستغانم — الجزائر</div>
+    <h1>
+      نُشعل شرارة
+      <span class="gradient-text">الإبداع التكنولوجي</span>
+    </h1>
+    <p>جمعية براعم التكنولوجيا مستغانم — بيئة تعليمية متكاملة تمنح الأطفال والشباب مهارات البرمجة، الروبوتيك، والذكاء الاصطناعي لبناء مستقبل أفضل.</p>
+    <div class="hero-btns">
+      <a href="#activities" class="btn-primary">اكتشف برامجنا 🚀</a>
+      <a href="#contact" class="btn-secondary">تواصل معنا</a>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">مجالات تكنولوجية</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">مستويات تعليمية</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">تعليم تطبيقي</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">🏛️</div>
+        <div class="stat-label">تحت إشراف وزارة الشباب</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOMAINS -->
+<section id="domains">
+  <div class="section-header reveal">
+    <div class="section-tag">المجالات</div>
+    <h2 class="section-title">نُعلّم تقنيات المستقبل</h2>
+    <p class="section-sub">نُغطي أبرز مجالات التكنولوجيا الحديثة في بيئة تفاعلية محفزة على الإبداع</p>
+    <div class="glow-divider"></div>
+  </div>
+
+  <div class="domains-grid">
+    <div class="domain-card reveal" style="--card-accent: #00C2FF;">
+      <span class="domain-icon">💻</span>
+      <div class="domain-name">البرمجة</div>
+      <div class="domain-name-en">Programming</div>
+    </div>
+    <div class="domain-card reveal" style="--card-accent: #7B2FFF;">
+      <span class="domain-icon">🤖</span>
+      <div class="domain-name">الروبوتيك</div>
+      <div class="domain-name-en">Robotics</div>
+    </div>
+    <div class="domain-card reveal" style="--card-accent: #FF6B35;">
+      <span class="domain-icon">🧠</span>
+      <div class="domain-name">الذكاء الاصطناعي</div>
+      <div class="domain-name-en">Artificial Intelligence</div>
+    </div>
+    <div class="domain-card reveal" style="--card-accent: #00FF99;">
+      <span class="domain-icon">🖨️</span>
+      <div class="domain-name">الطباعة 3D</div>
+      <div class="domain-name-en">3D Printing</div>
+    </div>
+    <div class="domain-card reveal" style="--card-accent: #FFD700;">
+      <span class="domain-icon">🧮</span>
+      <div class="domain-name">الحساب الذهني</div>
+      <div class="domain-name-en">Soroban</div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities" style="background: var(--dark);">
+  <div class="section-header reveal">
+    <div class="section-tag">الأنشطة</div>
+    <h2 class="section-title">برامج متنوعة لكل مستوى</h2>
+    <p class="section-sub">من الدروس الأسبوعية إلى المسابقات الدولية — رحلة تعليمية شاملة</p>
+    <div class="glow-divider"></div>
+  </div>
+
+  <div class="activities-grid">
+    <div class="activity-card reveal">
+      <div class="activity-number">01</div>
+      <span class="activity-emoji">📚</span>
+      <div class="activity-title">دروس منتظمة</div>
+      <ul class="activity-list">
+        <li>حصص أسبوعية متواصلة</li>
+        <li>مستوى مبتدئ — متوسط — متقدم</li>
+        <li>منهج نظري وتطبيقي متكامل</li>
+      </ul>
+    </div>
+
+    <div class="activity-card reveal">
+      <div class="activity-number">02</div>
+      <span class="activity-emoji">🛠️</span>
+      <div class="activity-title">ورشات تطبيقية</div>
+      <ul class="activity-list">
+        <li>ورشات برمجة مكثفة</li>
+        <li>ورشات روبوتيك وبناء النماذج</li>
+        <li>ورشات ذكاء اصطناعي</li>
+      </ul>
+    </div>
+
+    <div class="activity-card reveal">
+      <div class="activity-number">03</div>
+      <span class="activity-emoji">🏕️</span>
+      <div class="activity-title">مخيمات تعليمية</div>
+      <ul class="activity-list">
+        <li>تعلم وترفيه في آنٍ واحد</li>
+        <li>مشاريع تطبيقية جماعية</li>
+        <li>تجربة غامرة ومتكاملة</li>
+      </ul>
+    </div>
+
+    <div class="activity-card reveal">
+      <div class="activity-number">04</div>
+      <span class="activity-emoji">🏆</span>
+      <div class="activity-title">مسابقات وتحديات</div>
+      <ul class="activity-list">
+        <li>مسابقات برمجة وهاكاثون</li>
+        <li>مسابقات روبوتيك</li>
+        <li>تحديات علمية وابتكارية</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- TARGET AUDIENCE -->
+<section style="background: var(--dark2);">
+  <div class="section-header reveal" style="text-align: center; margin-bottom: 40px;">
+    <div class="section-tag" style="justify-content: center;">الفئة المستهدفة</div>
+    <h2 class="section-title">لمن هذا البرنامج؟</h2>
+    <p class="section-sub" style="margin: 0 auto;">برامجنا مصممة لتناسب جميع الفئات العمرية من محبي التكنولوجيا</p>
+    <div class="glow-divider" style="margin: 20px auto 0;"></div>
+  </div>
+
+  <div class="targets-wrapper reveal">
+    <div class="target-pill">
+      <span>👦</span>
+      <span>الأطفال</span>
+    </div>
+    <div class="target-pill">
+      <span>🧑</span>
+      <span>المراهقون</span>
+    </div>
+    <div class="target-pill">
+      <span>👨‍💻</span>
+      <span>الشباب</span>
+    </div>
+    <div class="target-pill">
+      <span>🌱</span>
+      <span>جميع المستويات</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="section-header reveal">
+    <div class="section-tag">لماذا نحن</div>
+    <h2 class="section-title">ما الذي يميّزنا؟</h2>
+    <p class="section-sub">بيئة تعليمية فريدة تجمع بين الجودة والإبداع والتطبيق الحقيقي</p>
+    <div class="glow-divider"></div>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">🎯</div>
+      <div class="feature-text">
+        <h4>تعليم تطبيقي حقيقي</h4>
+        <p>نركز على المشاريع الواقعية والتطبيق بدل الحفظ النظري</p>
+      </div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">👨‍🏫</div>
+      <div class="feature-text">
+        <h4>مدربون متخصصون</h4>
+        <p>أساتذة وخبراء في المجالات التقنية مع إشراف تربوي متكامل</p>
+      </div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">🤝</div>
+      <div class="feature-text">
+        <h4>شراكات رسمية</h4>
+        <p>نعمل تحت إشراف وزارة الشباب بشراكة مع مديرية الشباب والرياضة</p>
+      </div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">💡</div>
+      <div class="feature-text">
+        <h4>تنمية الإبداع</h4>
+        <p>بيئة محفزة تُطلق طاقة الإبداع والتفكير النقدي لدى الطلاب</p>
+      </div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">👥</div>
+      <div class="feature-text">
+        <h4>العمل الجماعي</h4>
+        <p>مشاريع جماعية تُعزز روح الفريق وتبادل المعرفة</p>
+      </div>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon-wrap">🚀</div>
+      <div class="feature-text">
+        <h4>مهارات المستقبل</h4>
+        <p>نُجهّز الجيل القادم لمواكبة التطور التكنولوجي المتسارع</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT - تم إصلاح الروابط -->
+<section id="contact">
+  <div class="section-header reveal">
+    <div class="section-tag">التواصل</div>
+    <h2 class="section-title">ابدأ رحلتك معنا</h2>
+    <p class="section-sub">تواصل معنا لمعرفة البرامج المتاحة وكيفية الانضمام</p>
+    <div class="glow-divider"></div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-info-card reveal">
+      <h3>معلومات التواصل</h3>
+      <p>نحن هنا لإجابة جميع أسئلتك ومساعدتك في الانضمام إلى عائلة براعم التكنولوجيا</p>
+
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-content">
+          <label>الهاتف</label>
+          <!-- تم إصلاح الرقم وجعله يعمل بشكل صحيح -->
+          <a href="tel:+213559517018">0559 51 70 18</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item-icon">📧</div>
+        <div class="contact-item-content">
+          <label>البريد الإلكتروني</label>
+          <!-- رابط الإيميل يعمل بشكل صحيح -->
+          <a href="mailto:mostarobotique@gmail.com">mostarobotique@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-content">
+          <label>الموقع</label>
+          <span>ولاية مستغانم — الجزائر</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-item-icon">📘</div>
+        <div class="contact-item-content">
+          <label>فيسبوك</label>
+          <!-- تم إصلاح رابط الفيسبوك ليذهب إلى الصفحة الرسمية للجمعية -->
+          <a href="https://www.facebook.com/100089191428480" target="_blank" rel="noopener noreferrer">صفحة فيسبوك الرسمية</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-box reveal">
+      <div class="cta-box-icon">🌟</div>
+      <h3>انضم إلى جيل المستقبل!</h3>
+      <p>سجّل اهتمامك الآن وكن جزءاً من مجتمع الشباب المبدع في مستغانم. أماكن محدودة في كل دفعة.</p>
+      <a href="mailto:mostarobotique@gmail.com" class="btn-primary" style="display:block; text-align:center;">📧 تواصل عبر البريد</a>
+      <a href="tel:+213559517018" class="btn-secondary" style="display:block; text-align:center; margin-top:12px;">📞 اتصل بنا</a>
+
+      <div class="cta-notice">
+        <div class="notice-item">البرامج تتغير حسب الموسم الدراسي</div>
+        <div class="notice-item">عدد الأماكن محدود في كل دورة</div>
+        <div class="notice-item">بعض الدورات قد تكون مدفوعة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🌱 جمعية براعم التكنولوجيا مستغانم</div>
+  <div class="footer-sub">نُشعل شرارة الإبداع — ولاية مستغانم، الجزائر</div>
+  <div class="footer-links">
+    <a href="#domains">المجالات</a>
+    <a href="#activities">الأنشطة</a>
+    <a href="#why">لماذا نحن</a>
+    <a href="#contact">التواصل</a>
+    <a href="mailto:mostarobotique@gmail.com">📧 البريد</a>
+    <a href="tel:+213559517018">📞 الهاتف</a>
+    <!-- إضافة رابط الفيسبوك في الفوتر -->
+    <a href="https://www.facebook.com/100089191428480" target="_blank" rel="noopener noreferrer">📘 فيسبوك</a>
+  </div>
+  <div class="footer-copy">
+    © 2024 جمعية براعم التكنولوجيا مستغانم — جميع الحقوق محفوظة
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, (Array.from(entry.target.parentElement.children).indexOf(entry.target)) * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth nav background
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 50) {
+      nav.style.background = 'rgba(6, 11, 24, 0.97)';
+    } else {
+      nav.style.background = 'rgba(6, 11, 24, 0.85)';
+    }
+  });
+  
+  // Mobile Menu Toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      // تغيير شكل الزر عند الفتح
+      menuBtn.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+    });
+    
+    // إغلاق القائمة عند الضغط على أي رابط
+    const links = navLinks.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        menuBtn.textContent = '☰';
+      });
+    });
+  }
+</script>
+</body>
+</html>
